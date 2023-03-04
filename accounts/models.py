@@ -4,6 +4,7 @@ from accounts.constants import *
 
 class User(AbstractUser):
     username = models.CharField(max_length=255,null=True,blank=True,unique=True)
+    full_name = models.CharField(max_length=255,null =True,blank =True)
     first_name=models.CharField(max_length=255,null=True,blank=True)
     last_name=models.CharField(max_length=255,null=True,blank=True)
     role_id =models.PositiveIntegerField(default = 1,choices = USER_ROLE,null=True,blank=True)

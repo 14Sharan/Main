@@ -14,6 +14,7 @@ def Signup(request):
         User.objects.create(username=request.POST.get("username"),
                             first_name=request.POST.get("firstname"),
                             last_name=request.POST.get('lastname'),
+                            full_name = request.POST.get("firstname") + " " +request.POST.get('lastname'),
                             email = request.POST.get('email'),
                             mobile_no = request.POST.get("mobile_no"),
                             role_id = STUDENT,
