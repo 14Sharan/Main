@@ -133,8 +133,8 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Profile</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created_on</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th> 
                     </tr>
                   </thead>
                   <tbody>
@@ -159,7 +159,14 @@
                          {% endif %}
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Created_on</span>
+                        {% if user.user_status == 1 %}
+                        <span class="badge badge-sm bg-gradient-success">Active</span>
+                        {% elif user.user_status == 2 %}
+                        <span class="badge badge-sm bg-gradient-warning">Inactive</span>
+                        {% else %}
+                        <span class="badge badge-sm bg-gradient-danger">Deleted</span>
+                        {% endif  %}
+
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{user.created_on}}</span>
@@ -169,11 +176,7 @@
                             <i class = "fa fa-eye "></i>
 
                         </a>&nbsp;
-                        <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            <i class = "fa fa-pencil"></i>
-
-                        </a>&nbsp;
-                        <a href="{% url 'superuser:delete_user' user.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{% url 'superuser:delete_user' user.id %}" onclick = "return('are you')" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                           <i class = "fa fa-trash"></i>
                         </a>
                       </td>
