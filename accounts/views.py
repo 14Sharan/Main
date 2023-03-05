@@ -7,7 +7,8 @@ from django.db.models import Q
 from django.http import JsonResponse
 
 def index(request):
-    return render(request,'admin/index.html')
+    users = User.objects.filter(role_id = STUDENT).count()
+    return render(request,'admin/index.html',{"users":users})
 
 def Signup(request):
     if request.method=="POST":
