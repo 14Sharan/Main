@@ -24,3 +24,6 @@ class User(AbstractUser):
     class Meta:
         managed = True
         db_table = "tb_user"
+
+
+    

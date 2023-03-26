@@ -217,7 +217,7 @@
           class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3"
         ></div>
       </div>
-    </div>
+    </div>  
   </div>
   <div class="container-fluid py-4">
     <div class="row">
@@ -226,6 +226,16 @@
           <div class="card-header pb-0">
             <div class="d-flex align-items-center">
               <p class="mb-0">Edit Profile</p>
+              {% if user.user_status == 1 %}
+              <a href = "{% url 'superuser:inactive_user' user.id %}" class="badge badge-sm bg-gradient-warning" style = "margin-left: 480px;">Inactive </a>
+              &nbsp;<a href = "{% url 'superuser:delete_user' user.id %}" class="badge badge-sm bg-gradient-danger">Delete</a>
+              {% elif user.user_status == 2 %}
+              <a href = "{% url 'superuser:activate_user' user.id %}" class="badge badge-sm bg-gradient-success" style = "margin-left: 480px;">Active </a>
+              &nbsp;<a href = "{% url 'superuser:delete_user' user.id %}" class="badge badge-sm bg-gradient-danger">Delete</a>
+              {% elif user.user_status == 3 %}
+              <a href = "{% url 'superuser:activate_user' user.id %}" class="badge badge-sm bg-gradient-success" style = "margin-left: 480px;">Active </a>
+              &nbsp;<a href = "{% url 'superuser:inactive_user' user.id %}" class="badge badge-sm bg-gradient-warning">Inactive</a>
+              {% endif %}
             </div>
           </div>
           <div class="card-body">

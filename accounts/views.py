@@ -34,9 +34,8 @@ def LoginView(request):
         elif not user.is_superuser:
             login(request,user)
             return redirect('accounts:signup')
-        
+        return render(request,"registration/signin.html")
     return render(request,"registration/signin.html")
-
 
 def LogOut(request):
     logout(request)

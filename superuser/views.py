@@ -1,25 +1,21 @@
 from django.shortcuts import render, redirect
 from accounts.models import *
 from accounts.constants import *
+from django.contrib.auth.decorators import login_required
 
-
-def subjects(request):
-    return render(request, "subjects/subjects-list.html")
-
-
+@login_required
 def All_users(request):
     all_users = User.objects.all().exclude(role_id=1).order_by("-created_on")
     return render(request, "admin/users/all-users.html", {"users": all_users})
 
-
+@login_required
 def DeleteUser(request, id):
     user = User.objects.get(id=id)
-    if user:
-        user.user_status == DELETED
-        user.save()
+    user.user_status = DELETED
+    user.save()
     return redirect('superuser:all_users')
 
-
+@login_required
 def userProfile(request, id):
     if request.method  == "GET":
         user = User.objects.get(id=id)
@@ -46,6 +42,28 @@ def userProfile(request, id):
             user.about = request.POST.get("about")
         user.save()
         return redirect('superuser:user_profile',id = id)
+
+"""
+Activate User
+"""
+@login_required
+def Activate_user(request,id):
+    user=User.objects.get(id=id)
+    user.user_status = ACTIVE
+    user.save()
+    return redirect('superuser:user_profile',id = id)
+
+"""
+In-activate User
+"""
+@login_required
+def Inactive_user(request,id):
+    user=User.objects.get(id=id)
+    user.user_status = INACTIVE
+    user.save()
+    return redirect('superuser:user_profile',id = id)
+
+
 
 
 
