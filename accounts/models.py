@@ -20,6 +20,7 @@ class User(AbstractUser):
     about = models.TextField(null = True,blank = True)
     created_on = models.DateTimeField(auto_now_add=True,null =True,blank=True)
     updated_on = models.DateTimeField(auto_now=True,null =True,blank=True)
+    qr_code = models.TextField(null=True,blank=True)
 
     class Meta:
         managed = True

@@ -33,3 +33,35 @@ def EditSubject(request,id):
             subject.subject_image = request.FILES.get('subject_image')
         subject.save()
         return redirect("course:subjects")
+    
+@login_required
+def DeleteSubject(request,id):
+    Subjects.objects.get(id=id).delete()
+    return redirect('course:subjects')
+
+
+
+@login_required
+def CourseList(request):
+    course = Course.objects.all().order_by('-created_on')
+    return render(request,"admin/course/course-list.html",{"courses":course})
+
+@login_required
+def AddCourse(request):
+    subjects= Subjects.objects.all().order_by('-created_on')
+    if request.method == "GET":
+        return render(request,"admin/course/add-course.html",{"subjects":subjects})
+    if request.method== "POST":
+        course=Course.objects.create(title = request.POST.get('title'),
+                            description = request.POST.get("description"),
+                            image=request.FILES.get("course_image"),
+                            subject_id = request.POST.get('subjects'),
+                            preview_video = request.FILES.get("pre_video"),
+                            )
+
+        return redirect("course:add_course")
+
+
+@login_required
+def ViewCourse(request):
+    return render(request,"admin/course/view-course.html")

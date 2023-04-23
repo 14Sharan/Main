@@ -123,22 +123,24 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0 d-flex">
-              <h6>Subjects</h6>
-                <a href = "{% url 'course:add_subject' %}" class="btn btn-success" style = "margin-left: 80%;">Add Subject</a>
+              <h6>Courses</h6>
+                <a href = "{% url 'course:add_course' %}" class="btn btn-success" style = "margin-left: 80%;">Add Course</a>
               </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subject Title</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Suject Description</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Course Title</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Course Description</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created On</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th> 
                     </tr>
                   </thead>
                   <tbody>
-                    {% for subject in subjects %}
+                    {% if courses %}
+                    {% for course in courses %}
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
@@ -146,29 +148,38 @@
                             <img src="{% static 'assets/img/team-2.jpg' %}" class="avatar avatar-sm me-3" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{subject.title}}</h6>
+                            <h6 class="mb-0 text-sm">{{course.title|truncatechars:30}}</h6>
                           </div>
                         </div>
                       </td>
                       <td>
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{subject.description}}</h6>
+                          <h6 class="mb-0 text-sm">{{course.description|safe|truncatechars:50}}</h6>
                         </div>
                       </td>
-                     
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">{{subject.created_on}}</span>
+                      <td>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{course.subject.title}}</h6>
+                        </div>
                       </td>
+                      <td>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{course.created_on}}</h6>
+                        </div>
+                      </td>
+                    
                       <td class="align-middle">
-                        <a href="{% url 'course:edit_subject' subject.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </a>&nbsp;
-                        <a href="{% url 'course:delete_subject' subject.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
                       </td>
                     </tr>
                     {% endfor %}
+                    {% else %}
+                    <td>
+                      <span>No Course Found</span>
+                    </td>
+                    {% endif %}
                   </tbody>
                 </table>
               </div>

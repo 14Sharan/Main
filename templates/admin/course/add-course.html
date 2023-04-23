@@ -37,15 +37,7 @@
           </div>
         </div>
         <ul class="navbar-nav justify-content-end">
-          <li class="nav-item d-flex align-items-center">
-            <a
-              href="javascript:;"
-              class="nav-link text-white font-weight-bold px-0"
-            >
-              <i class="fa fa-user me-sm-1"></i>
-              <span class="d-sm-inline d-none">Sign In</span>
-            </a>
-          </li>
+        
           <li class="nav-item d-xl-none ps-3 pe-0 d-flex align-items-center">
             <a href="javascript:;" class="nav-link text-white p-0">
               <a
@@ -191,27 +183,18 @@
       <div class="row gx-4">
         <div class="col-auto">
           <div class="avatar avatar-xl position-relative">
-            {% if user.profile_pic %}
-            
+       
             <img
-              src="{{user.profile_pic.url}}"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAS9SNcdLrf0MOxDwfhyOLAM8KwSxUABw-YZC65Q9m&s}"
               alt="profile_image"
               class="w-100 border-radius-lg shadow-sm"
             />
-            {% else %}
-            <img
-              src="{% static 'assets/img/team-1.jpg' %}"
-              alt="profile_image"
-              class="w-100 border-radius-lg shadow-sm"
-            />
-            {% endif %}
           </div>
         </div>
         <div class="col-auto my-auto">
           <div class="h-100">
-            <h5 class="mb-1">{{user.full_name}}</h5>
-            <p class="mb-0 font-weight-bold text-sm">Public Relations</p>
-          </div>
+            <h5 class="mb-1">Add Course</h5>
+              </div>
         </div>
         <div
           class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3"
@@ -221,196 +204,72 @@
   </div>
   <div class="container-fluid py-4">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8 col-lg-12">
         <div class="card">
           <div class="card-header pb-0">
             <div class="d-flex align-items-center">
-              <p class="mb-0">Edit Profile</p>
-              {% if user.user_status == 1 %}
-              <a href = "{% url 'superuser:inactive_user' user.id %}" class="badge badge-sm bg-gradient-warning" style = "margin-left: 480px;">Inactive </a>
-              &nbsp;<a href = "{% url 'superuser:delete_user' user.id %}" class="badge badge-sm bg-gradient-danger">Delete</a>
-              {% elif user.user_status == 2 %}
-              <a href = "{% url 'superuser:activate_user' user.id %}" class="badge badge-sm bg-gradient-success" style = "margin-left: 480px;">Active </a>
-              &nbsp;<a href = "{% url 'superuser:delete_user' user.id %}" class="badge badge-sm bg-gradient-danger">Delete</a>
-              {% elif user.user_status == 3 %}
-              <a href = "{% url 'superuser:activate_user' user.id %}" class="badge badge-sm bg-gradient-success" style = "margin-left: 480px;">Active </a>
-              &nbsp;<a href = "{% url 'superuser:inactive_user' user.id %}" class="badge badge-sm bg-gradient-warning">Inactive</a>
-              {% endif %}
+              <p class="mb-0"><b>Course Details</b></p>
+             
             </div>
           </div>
           <div class="card-body">
-           <form action = "{% url 'superuser:user_profile' user.id %}" method = "POST"   enctype="multipart/form-data">
+           <form id = 'add-course' action = "{% url 'course:add_course' %}" method = "POST"   enctype="multipart/form-data">
             {% csrf_token %}
-            <p class="text-uppercase text-sm">User Information</p>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"  >Email address</label >
-                  <input
-                    class="form-control"
-                    type="email"
-                    value="{{user.email}}"
-                    name="email"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >First name</label
-                  >
+                  <label for="example-text-input" class="form-control-label" >Course Title</label >
                   <input
                     class="form-control"
                     type="text"
-                    value="{{user.first_name}}"
-                    name="firstname"
+                    placeholder="Enter Title"
+                    name="title"
                   />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="example-text-input" class="form-control-label">Last name</label>
-                  <input class="form-control" type="text"
-                  value="{% if user.last_name %}{{user.last_name}}{% else %}{% endif %}" name="last_name">
+                  <label for="example-text-input" class="form-control-label" >Subject</label >
+                  <select class = "form-control" name = "subjects">
+                    {% for subject in subjects %}
+                    
+                 <option value = "{{subject.id}}">{{subject.title}}</option>
+                 {% endfor %}
+                  </select>
+                
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label"
+                    >Course Image</label
+                  >
+                  <input class="form-control" type="file" name="course_image" />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="example-text-input" class="form-control-label"
-                    >Profile Pic</label
-                  >
-                  <input class="form-control" type="file" name="profile_pic" />
+                    >Preview video</label>
+                  <input class="form-control" type="file" name="pre_video" />
                 </div>
               </div>
-            </div>
-            <hr class="horizontal dark" />
-            <p class="text-uppercase text-sm">Contact Information</p>
-            <div class="row">
+              
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="example-text-input" class="form-control-label"
-                    >Address</label
+                    >Description</label
                   >
-                  <input
-                    class="form-control"
-                    type="text"
-                    value="{% if user.address%}{{user.address}}{% else %}{% endif %}"
-                    name = "address"
-                  />
+                  <textarea type ="text" name="description" id ="description" class="form-control"></textarea>
+                 
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >City</label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    value="{% if user.city%}{{user.city}}{% else %}{% endif %}"
-                    name = "city"
-                  />
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >Country</label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    value="{% if user.country%}{{user.country}}{% else %}{% endif %}"
-                    name = "country"
-                  />
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >Postal code</label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    value="{% if user.postal_code%}{{user.postal_code}}{% else %}{% endif %}"
-                    name = "postal_code"
-                  />
-                </div>
-              </div>
+              <button class="btn btn-primary btn-sm mb-0 w-100"  type="submit">Add Course</button>
+
             </div>
-            <hr class="horizontal dark" />
-            <p class="text-uppercase text-sm">About me</p>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >About me</label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    value="{% if user.about%}{{user.about}}{% else %}{% endif %}"
-                    name = "about"
-                  />
-                </div>
-              </div>
-              <button class="btn btn-primary btn-sm mb-0 w-100"  type="submit">Update Profile</button>
-            </div>
+           
             </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card card-profile">
-          <img
-            src="{% static 'assets/img/bg-profile.jpg' %}"
-            alt="Image placeholder"
-            class="card-img-top"
-          />
-          <div class="row justify-content-center">
-            <div class="col-4 col-lg-4 order-lg-2">
-              <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                <a href="javascript:;">
-                  {% if user.profile_pic %}
-                  <img
-
-                    src="{{user.profile_pic.url}}"
-                    class="rounded-circle img-fluid border border-2 border-white"
-                  />
-                  {% else %}
-                  <img
-                    src="{% static 'assets/img/team-2.jpg' %}"
-                    class="rounded-circle img-fluid border border-2 border-white"
-                  />
-                  {% endif  %}
-                </a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3"
-          >
-            <div class="d-flex justify-content-between"></div>
-          </div>
-          <div class="card-body pt-0">
-            <div class="row">
-              <div class="col"></div>
-            </div>
-            <div class="text-center mt-4">
-              <h5>
-                {{user.first_name}}<span class="font-weight-light"></span>
-
-                {{user.qr_code|safe}}
-              </h5>
-              <div class="h6 font-weight-300">
-                {% if user.profile_status %}
-                <span class="badge badge-sm bg-gradient-success">Verified</span>
-                {% else %}
-                <span class="badge badge-sm bg-gradient-danger">Un-verified</span>
-                {% endif %}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -418,3 +277,58 @@
   </div>
 </div>
 {% include 'admin/include/footer.html' %}
+<script>
+    CKEDITOR.replace( 'description' );
+</script>
+
+<!-- <script>
+    
+
+    $("#add-course").validate({
+    rules:{
+      title:{
+        required:true,
+      },
+     
+      description:{
+        required:true,
+        
+      },
+      course_image:{
+        required:true,
+        accept: "jpg|jpeg|png|ico|bmp"
+        
+      },
+      course_video:{
+        required:true,
+        accept: "mp3|mp4"
+        
+      },
+      pre_video:{
+        required:true,
+        accept: "mp3|mp4"
+        
+      },
+    },
+      messages:{
+        title:{
+          required:"Please enter title",
+        },
+        description:{
+          required:"Please enter description",
+        },
+        course_image:{
+            required:"Please Select Image ",
+            accept: "Please upload file in these format only (jpg, jpeg, png, ico, bmp).",
+        },
+        course_video:{
+            required:"Please Select Course Video ",
+            accept: "Please upload file in these format only (mp3,mp4).",
+        },
+        pre_video:{
+            required:"Please Select Course Preview Video ",
+            accept: "Please upload file in these format only (mp3,mp4).",
+        },
+      }
+  })
+  </script> -->
