@@ -66,35 +66,4 @@ def Inactive_user(request,id):
     user.save()
     return redirect('superuser:user_profile',id = id)
 
-import io
-from pyqrcode import create
-import png 
-
-@login_required
-def GenerateQrCode(request):
-    users = User.objects.filter(role_id = STUDENT)
-    for user in users:
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
-        )
-        qr.add_data('user.id')
-        a=qr.make(fit=True)
-        print(a,">>>>>>>>>>>>>>>>>>>>>>>>>>")
-
-
-
-
-        # factory = qrcode.image.svg.SvgImage
-        # img = qrcode.make(user.id, image_factory=factory, box_size=20)
-        # print(img,"?????????????????????????")
-        # stream = BytesIO()
-        # a=img.save(stream)
-        # print(a,"><>>>>>>>>")
-    raise
-
-        
-
 

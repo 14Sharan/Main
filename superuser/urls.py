@@ -7,5 +7,5 @@ urlpatterns = [
     path('user-profile/<int:id>',userProfile,name='user_profile'),
     path('activate-user/<int:id>',Activate_user,name='activate_user'),
     path('inactive-user/<int:id>',Inactive_user,name='inactive_user'),
-    path('GenerateQrCode/',GenerateQrCode,name='GenerateQrCode'),
+   
 ] 
